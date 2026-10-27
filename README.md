@@ -58,13 +58,13 @@ Location signals (latitude, longitude, distance, suburb, postcode) collectively 
 
 The dataset contains 13,580 residential property sales with 21 features. Sales in the dataset were recorded between **January 2016 and September 2017**.
 
-> **Important:** This data is 8 years old. Melbourne property prices have changed significantly since 2017. Estimates produced by this app reflect market conditions at the time of training, not today's market.
+> **Important:** This data is from 2016–2017. Melbourne property prices have changed significantly since 2017. Estimates produced by this app reflect market conditions at the time of training, not today's market.
 
 ---
 
 ## Known Limitations
 
-**Data age.** The training data is from 2016–2017. The model has no awareness of market movements since then, that being said, when comparing to property value in say 2018, the model exhibits a high level of accuracy.
+**Data age.** The training data is from 2016–2017. The model has no awareness of market movements since then.
 
 **Missing building area.** Building area (internal floor space) was excluded from the model because 47.5% of rows in the dataset had no value for it. Including it with median imputation offered only a marginal accuracy gain while creating unreliable behaviour for users entering different values. Instead, plot size is used as a proxy, which is unfortunately not a perfect substitute.
 
@@ -84,7 +84,7 @@ The dataset contains 13,580 residential property sales with 21 features. Sales i
 | Preprocessing | scikit-learn ColumnTransformer (OrdinalEncoder + SimpleImputer) |
 | Explainability | SHAP TreeExplainer |
 | Geocoding | geopy / OpenStreetMap Nominatim |
-| App | panda, numpy, joblib, -> streamlit |
+| App | Streamlit, pandas, NumPy, joblib |
 | Deployment | Streamlit Cloud |
 
 ---
@@ -97,7 +97,10 @@ The dataset contains 13,580 residential property sales with 21 features. Sales i
 ├── model_features.json     # Feature list expected by the model
 ├── melb_data.csv           # Source dataset
 ├── melbourne.ipynb         # Training notebook (EDA, feature selection, model comparison)
-├── requirements.txt
+├── requirements.txt        # App dependencies
+├── requirements-dev.txt    # Adds notebook dependencies
+├── .devcontainer/          # Codespaces config
+├── .gitignore
 └── LICENSE
 ```
 
@@ -110,6 +113,12 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+To run the training notebook, install `requirements-dev.txt` instead.
+
 Requires `melbourne_model.pkl` and `model_features.json` in the same directory as `app.py`.
 
 ---
+
+## License
+
+The code is released under the [MIT License](LICENSE). The dataset comes from Kaggle and has its own terms; see the dataset page linked above.

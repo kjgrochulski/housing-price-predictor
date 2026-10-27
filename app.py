@@ -1,5 +1,3 @@
-from unicodedata import name
-
 import streamlit as st
 import joblib
 import json
@@ -136,8 +134,7 @@ def normalise_council(raw_council: str) -> str:
         "", raw_council, flags=re.IGNORECASE
     ).strip()
     return stripped if stripped in KNOWN_COUNCILS else raw_council
- 
- 
+
 
 # ── Styling ───────────────────────────────────────────────────────────────────
 
@@ -265,11 +262,6 @@ with col2:
     placeholder="Leave blank if unknown",
 )
     landsize = st.number_input("Plot Size (m²)", min_value=0, max_value=100000, value=300) 
-    # propertycount = st.number_input(
-    #     "Properties in Suburb (approx)",
-    #     min_value=1, max_value=50000, value=5000,
-    #     help="Rough number of properties in the suburb. Check realestate.com.au if unsure."
-    # )
 
     suburb_input = st.text_input(
         "Suburb (auto-filled)",
@@ -277,16 +269,6 @@ with col2:
         help="Auto-filled from address. Edit if incorrect."
     )   
     propertycount = SUBURB_PROPERTYCOUNT.get(suburb_input or suburb, PROPERTYCOUNT_DEFAULT)
-    # council_input = st.text_input(
-    #     "Council Area (auto-filled if available)",
-    #         value=council,
-    #         help="Auto-filled from address. Edit if incorrect."
-    #     )
-    
-    # council_input = ""
-
-
-
 
 
 # ── Predict ───────────────────────────────────────────────────────────────────
@@ -380,20 +362,10 @@ if st.button("Predict Price", type="primary", use_container_width=True, disabled
                     </div>
                 """, unsafe_allow_html=True)
 
-            # st.write("Input columns:", input_df.columns.tolist())
-            # st.write("Model expects:", model.named_steps['preprocessor'].feature_names_in_)
-            # st.write("Input columns:", input_df)
-
-            # st.markdown("""
-            #     <div class="warning-box" style="margin-top:16px;">
-            #         <strong>Note:</strong> This is an estimate for educational purposes only.
-            #         Actual property values depend on many factors not captured in this model.
-            #     </div>
-            # """, unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Prediction error: {e}")
-            st.info("This may happen if the suburb or council area wasn't seen during training. Try editing those fields.")
+            st.info("This may happen if the suburb wasn't seen during training. Try editing the suburb field.")
 
 
 # ── Footer ────────────────────────────────────────────────────────────────────
