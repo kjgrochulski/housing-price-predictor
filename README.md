@@ -97,7 +97,8 @@ The dataset contains 13,580 residential property sales with 21 features. Sales i
 ├── model_features.json     # Feature list expected by the model
 ├── melb_data.csv           # Source dataset
 ├── melbourne.ipynb         # Training notebook (EDA, feature selection, model comparison)
-└── requirements.txt
+├── requirements.txt
+└── LICENSE
 ```
 
 ---
