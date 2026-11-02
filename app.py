@@ -17,6 +17,9 @@ st.set_page_config(
 
 MELBOURNE_CBD = (-37.8136, 144.9631)
 
+# The model was trained on the dataset's codes: h = house, u = unit, t = townhouse
+TYPE_CODES = {"House": "h", "Unit/Apartment": "u", "Townhouse": "t"}
+
 # ── Load model ───────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_model():
@@ -284,9 +287,9 @@ if st.button("Predict Price", type="primary", use_container_width=True, disabled
         try:
             input_df = pd.DataFrame([{
                 "Suburb": suburb_input or suburb,
-                "Type": prop_type,
+                "Type": TYPE_CODES[prop_type],
                 "Distance": distance,
-                "Postcode": postcode,
+                "Postcode": float(postcode) if postcode.isdigit() else np.nan,
                 "Landsize": landsize,
                 "CouncilArea": council, # or formerly council_input,
                 "Lattitude": lat,

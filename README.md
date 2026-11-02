@@ -34,9 +34,9 @@ A machine learning web app that estimates residential property sale prices in Me
 | **Algorithm** | LightGBM (gradient boosting) |
 | **Target** | log1p(Price) — predictions are transformed back to AUD |
 | **Training data** | 13,580 Melbourne property sales |
-| **Test R²** | 0.87 |
-| **Test MAE** | ~$155,000 (approx. 17% of median sale price) |
-| **Cross-validated R²** | 0.85 (5-fold) |
+| **Test R²** | 0.87 on log price (0.84 in AUD) |
+| **Test MAE** | ~$155,000 (17% of median sale price) |
+| **Cross-validated R²** | 0.87 on log price (5-fold) |
 
 The model was selected after benchmarking against XGBoost, Gradient Boosting, Random Forest, Extra Trees, Decision Tree, and ElasticNet. LightGBM and XGBoost performed very similarly; LightGBM was chosen for deployment.
 
@@ -96,7 +96,8 @@ The dataset contains 13,580 residential property sales with 21 features. Sales i
 ├── melbourne_model.pkl     # Trained LightGBM pipeline
 ├── model_features.json     # Feature list expected by the model
 ├── melb_data.csv           # Source dataset
-├── melbourne.ipynb         # Training notebook (EDA, feature selection, model comparison)
+├── melbourne.ipynb         # Exploration: EDA, feature selection, model comparison
+├── train_model.py          # Rebuilds the deployed model and prints its metrics
 ├── requirements.txt        # App dependencies
 ├── requirements-dev.txt    # Adds notebook dependencies
 ├── .devcontainer/          # Codespaces config
@@ -113,7 +114,9 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-To run the training notebook, install `requirements-dev.txt` instead.
+To run the exploration notebook, install `requirements-dev.txt` instead.
+
+`python train_model.py` reproduces the metrics above (add `--save` to rewrite `melbourne_model.pkl`).
 
 Requires `melbourne_model.pkl` and `model_features.json` in the same directory as `app.py`.
 
